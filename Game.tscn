@@ -1,0 +1,188 @@
+[gd_scene load_steps=21 format=3 uid="uid://df2qyh7x3cpqy"]
+
+[ext_resource type="Script" path="res://Scripts/ScoreSystem.cs" id="1_8jlga"]
+[ext_resource type="Texture2D" uid="uid://coc5s8fakrh2t" path="res://Left.png" id="1_mxx8x"]
+[ext_resource type="Texture2D" uid="uid://bjdxlx0evfmtc" path="res://Right.png" id="2_vy5op"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="2_x1ddg"]
+[ext_resource type="Script" path="res://Scripts/Ball.cs" id="4_wfdgh"]
+[ext_resource type="Script" path="res://Scripts/OpponentLogic.cs" id="5_y7w8s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v4scp"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yyog1"]
+radius = 66.119
+height = 279.717
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vt2en"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rkc5u"]
+radius = 66.1206
+height = 258.739
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2ghu"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g38xd"]
+size = Vector2(1126, 26)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7tgp0"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lt4pn"]
+size = Vector2(1128, 17)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y43lm"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2w34"]
+size = Vector2(24, 644)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ltg05"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l4swj"]
+radius = 13.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fiqnq"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gji7q"]
+size = Vector2(31, 651)
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("LeftScoreLabel", "RightScoreLabel")]
+script = ExtResource("1_8jlga")
+LeftScoreLabel = NodePath("PlayerScore")
+RightScoreLabel = NodePath("OpponentScore")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.8, 16.2)
+color = Color(0.00392157, 0, 0.109804, 1)
+
+[node name="Player" type="Sprite2D" parent="." node_paths=PackedStringArray("Ceiling", "Floor")]
+position = Vector2(127, 322)
+scale = Vector2(0.304413, 0.304413)
+texture = ExtResource("1_mxx8x")
+offset = Vector2(-21.95, 0)
+script = ExtResource("2_x1ddg")
+Ceiling = NodePath("../Top")
+Floor = NodePath("../Bottom")
+CollisionOffset = 40.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Player"]
+position = Vector2(-3.28503, -0.00341797)
+scale = Vector2(1.00193, 0.942797)
+physics_material_override = SubResource("PhysicsMaterial_v4scp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/StaticBody2D"]
+position = Vector2(-3.27868, 0.00350571)
+scale = Vector2(0.991753, 0.996527)
+shape = SubResource("CapsuleShape2D_yyog1")
+
+[node name="Opponent" type="Sprite2D" parent="." node_paths=PackedStringArray("ball")]
+position = Vector2(1030.31, 315.496)
+rotation = 3.14159
+scale = Vector2(-0.289375, -0.289375)
+texture = ExtResource("2_vy5op")
+script = ExtResource("5_y7w8s")
+moveSpeed = 600.0
+ball = NodePath("../Ball")
+randomChasingOffset = 60
+updateTime = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Opponent"]
+position = Vector2(-14.8918, -1.7157)
+rotation = 3.14159
+scale = Vector2(1.054, -0.991792)
+physics_material_override = SubResource("PhysicsMaterial_vt2en")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Opponent/StaticBody2D"]
+position = Vector2(-3.27829, 0.00331807)
+scale = Vector2(0.991753, 0.996527)
+shape = SubResource("CapsuleShape2D_rkc5u")
+
+[node name="Bottom" type="StaticBody2D" parent="."]
+position = Vector2(576, 662.5)
+physics_material_override = SubResource("PhysicsMaterial_h2ghu")
+
+[node name="Bottom" type="CollisionShape2D" parent="Bottom"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_g38xd")
+
+[node name="Top" type="StaticBody2D" parent="."]
+position = Vector2(574, -8.5)
+physics_material_override = SubResource("PhysicsMaterial_7tgp0")
+
+[node name="Top" type="CollisionShape2D" parent="Top"]
+shape = SubResource("RectangleShape2D_lt4pn")
+
+[node name="Right" type="StaticBody2D" parent="."]
+position = Vector2(1164, 324)
+physics_material_override = SubResource("PhysicsMaterial_y43lm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+shape = SubResource("RectangleShape2D_w2w34")
+
+[node name="HitDetectionArea" type="Area2D" parent="Right"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/HitDetectionArea"]
+shape = SubResource("RectangleShape2D_w2w34")
+
+[node name="OpponentScore" type="RichTextLabel" parent="."]
+offset_left = 778.0
+offset_top = 40.0
+offset_right = 818.0
+offset_bottom = 80.0
+text = "100"
+
+[node name="PlayerScore" type="RichTextLabel" parent="."]
+offset_left = 363.0
+offset_top = 40.0
+offset_right = 403.0
+offset_bottom = 80.0
+text = "100"
+
+[node name="Ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("opponentScore", "playerScore")]
+position = Vector2(572, 336)
+physics_material_override = SubResource("PhysicsMaterial_ltg05")
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp_mode = 1
+script = ExtResource("4_wfdgh")
+DefaultSpeed = 500.0
+opponentScore = NodePath("../OpponentScore")
+playerScore = NodePath("../PlayerScore")
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_l4swj")
+
+[node name="Left" type="StaticBody2D" parent="."]
+position = Vector2(-13.5, 325.5)
+physics_material_override = SubResource("PhysicsMaterial_fiqnq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+shape = SubResource("RectangleShape2D_gji7q")
+
+[node name="HitDetectionArea" type="Area2D" parent="Left"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/HitDetectionArea"]
+shape = SubResource("RectangleShape2D_gji7q")
+
+[connection signal="body_entered" from="Right/HitDetectionArea" to="." method="_on_right_area_entered"]
+[connection signal="body_entered" from="Left/HitDetectionArea" to="." method="_on_left_area_entered"]
