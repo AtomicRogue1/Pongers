@@ -46,7 +46,6 @@ public partial class OpponentLogic : Sprite2D
 		dir=0;
 
 		GlobalPosition+=new Vector2(0,(float)delta*dir*moveSpeed);
-		GD.Print(chasingOffset);
 	}
 
 	void updateTimer(double del)
