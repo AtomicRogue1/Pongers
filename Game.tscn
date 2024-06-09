@@ -173,7 +173,7 @@ texture = ExtResource("2_vy5op")
 script = ExtResource("5_y7w8s")
 moveSpeed = 600.0
 ball = NodePath("../Ball")
-randomChasingOffset = 60
+randomChasingOffset = 80
 updateTime = 1
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Opponent"]
