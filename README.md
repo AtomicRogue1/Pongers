@@ -16,8 +16,8 @@ A classic Pong game with a few twists created using Godot 4 Engine. This project
 3.  Run the project by pressing F5 or clicking the "Play" button in the Godot editor.
 
 ## Controls
-Move up and down: Mouse movement
-Pause game: Esc
+      Move up and down: Mouse movement
+      Pause game: Esc
 
 ## Contributing
 Feel free to open issues or submit pull requests if you have suggestions for improvements or bug fixes.
