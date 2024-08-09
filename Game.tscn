@@ -1,10 +1,13 @@
-[gd_scene load_steps=32 format=3 uid="uid://df2qyh7x3cpqy"]
+[gd_scene load_steps=40 format=3 uid="uid://df2qyh7x3cpqy"]
 
 [ext_resource type="Script" path="res://Scripts/ScoreSystem.cs" id="1_8jlga"]
 [ext_resource type="Texture2D" uid="uid://coc5s8fakrh2t" path="res://Left.png" id="1_mxx8x"]
 [ext_resource type="Texture2D" uid="uid://d13lnf26ps0j" path="res://Field.png" id="2_2k7rg"]
 [ext_resource type="Texture2D" uid="uid://bjdxlx0evfmtc" path="res://Right.png" id="2_vy5op"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="2_x1ddg"]
+[ext_resource type="FontFile" uid="uid://bbp08xagcyw05" path="res://DeliriumNcv-Vm5e.ttf" id="3_m3h7a"]
+[ext_resource type="Shader" path="res://GameBGShader.gdshader" id="3_uhjpw"]
+[ext_resource type="AudioStream" uid="uid://cuuy1d2ktweoo" path="res://SFX/speedUpsfx.mp3" id="4_3ea31"]
 [ext_resource type="Script" path="res://Scripts/Ball.cs" id="4_wfdgh"]
 [ext_resource type="Script" path="res://Scripts/OpponentLogic.cs" id="5_y7w8s"]
 [ext_resource type="Theme" uid="uid://br4ep274xqb8a" path="res://GameTheme.tres" id="7_0ed0d"]
@@ -12,43 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dluh7vc5rslk4" path="res://SFX/kickback8bit.mp3" id="7_8jc4v"]
 [ext_resource type="AudioStream" uid="uid://das1n1lsmkly" path="res://SFX/hitHurt.wav" id="7_ke7mp"]
 [ext_resource type="Script" path="res://Scripts/PowerUpGenerator.cs" id="12_bp3s1"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v4scp"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yyog1"]
-radius = 66.119
-height = 279.717
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vt2en"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rkc5u"]
-radius = 66.1206
-height = 258.739
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2ghu"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g38xd"]
-size = Vector2(1126, 26)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7tgp0"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lt4pn"]
-size = Vector2(1128, 17)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y43lm"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2w34"]
-size = Vector2(24, 644)
+[ext_resource type="Script" path="res://Scripts/TrailMakingScript.cs" id="12_fkmk8"]
 
 [sub_resource type="Animation" id="Animation_u56pe"]
 resource_name = "WhenScoreUpdatesOpponent"
@@ -106,12 +73,82 @@ _data = {
 "WhenScoreUpdates": SubResource("Animation_h5gty")
 }
 
+[sub_resource type="Animation" id="Animation_5cd3i"]
+resource_name = "SpeedUpAnimation"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.478431), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8guw"]
+_data = {
+"SpeedUpAnimation": SubResource("Animation_5cd3i")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k5285"]
+resource_local_to_scene = true
+shader = ExtResource("3_uhjpw")
+shader_parameter/desiredColor = Color(0.619608, 0.615686, 0, 1)
+shader_parameter/timeFactor = 1.5
+shader_parameter/waveFrequency = 1.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v4scp"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yyog1"]
+radius = 66.119
+height = 279.717
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vt2en"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rkc5u"]
+radius = 66.1206
+height = 258.739
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2ghu"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g38xd"]
+size = Vector2(1210, 26)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7tgp0"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lt4pn"]
+size = Vector2(1202, 17)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y43lm"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2w34"]
+size = Vector2(24, 644)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ltg05"]
 friction = 0.0
 bounce = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l4swj"]
 radius = 13.0
+
+[sub_resource type="Curve" id="Curve_r7erd"]
+bake_resolution = 50
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fiqnq"]
 friction = 0.0
@@ -124,15 +161,91 @@ size = Vector2(31, 651)
 script = ExtResource("1_8jlga")
 LeftScoreLabel = NodePath("CanvasLayer/PlayerScore")
 RightScoreLabel = NodePath("CanvasLayer/OpponentScore")
-WinningScore = 100.0
+WinningScore = 50.0
 PlayerScoreAnimation = NodePath("CanvasLayer/PlayerScore/AnimationPlayer")
 OpponentScoreAnimation = NodePath("CanvasLayer/OpponentScore/AnimationPlayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="OpponentScore" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = -0.147569
+anchor_right = 1.0
+anchor_bottom = 1.06019
+offset_left = 788.0
+offset_top = 40.0
+offset_right = -324.0
+offset_bottom = -568.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_0ed0d")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]10[/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/OpponentScore"]
+libraries = {
+"": SubResource("AnimationLibrary_3r7q2")
+}
+
+[node name="PlayerScore" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 363.0
+offset_top = 40.0
+offset_right = -623.0
+offset_bottom = -529.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_0ed0d")
+theme_override_font_sizes/normal_font_size = 0
+bbcode_enabled = true
+text = "[center]10[/center]"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PlayerScore"]
+libraries = {
+"": SubResource("AnimationLibrary_e7xag")
+}
+
+[node name="SpeedUp" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/default_color = Color(1, 1, 1, 0)
+theme_override_fonts/normal_font = ExtResource("3_m3h7a")
+theme_override_font_sizes/normal_font_size = 646
+bbcode_enabled = true
+text = "[center]SPEED UP[/center]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/SpeedUp"]
+libraries = {
+"": SubResource("AnimationLibrary_a8guw")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/SpeedUp"]
+stream = ExtResource("4_3ea31")
+volume_db = -9.72
 
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(28.8, 16.2)
-color = Color(0.00392157, 0, 0.109804, 1)
+color = Color(0, 0, 0, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_k5285")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Field" type="Sprite2D" parent="."]
 position = Vector2(576, 324)
@@ -206,7 +319,7 @@ shape = SubResource("RectangleShape2D_g38xd")
 [node name="HitDetectionArea" type="Area2D" parent="Bottom"]
 
 [node name="Bottom" type="CollisionShape2D" parent="Bottom/HitDetectionArea"]
-position = Vector2(0, -3)
+position = Vector2(-3, -3)
 shape = SubResource("RectangleShape2D_g38xd")
 
 [node name="Top" type="StaticBody2D" parent="." groups=["Walls"]]
@@ -219,6 +332,7 @@ shape = SubResource("RectangleShape2D_lt4pn")
 [node name="HitDetectionArea" type="Area2D" parent="Top"]
 
 [node name="Top" type="CollisionShape2D" parent="Top/HitDetectionArea"]
+position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_lt4pn")
 
 [node name="Right" type="StaticBody2D" parent="." groups=["Walls"]]
@@ -233,55 +347,13 @@ shape = SubResource("RectangleShape2D_w2w34")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Right/HitDetectionArea"]
 shape = SubResource("RectangleShape2D_w2w34")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="OpponentScore" type="RichTextLabel" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = -0.147569
-anchor_right = 1.0
-anchor_bottom = 1.06019
-offset_left = 788.0
-offset_top = 40.0
-offset_right = -324.0
-offset_bottom = -568.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("7_0ed0d")
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-text = "[center]10[/center]"
-metadata/_edit_use_anchors_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/OpponentScore"]
-libraries = {
-"": SubResource("AnimationLibrary_3r7q2")
-}
-
-[node name="PlayerScore" type="RichTextLabel" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 363.0
-offset_top = 40.0
-offset_right = -623.0
-offset_bottom = -529.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("7_0ed0d")
-theme_override_font_sizes/normal_font_size = 0
-bbcode_enabled = true
-text = "[center]10[/center]"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PlayerScore"]
-libraries = {
-"": SubResource("AnimationLibrary_e7xag")
-}
-
-[node name="Ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("opponentScore", "playerScore", "BallAudio")]
+[node name="Ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("opponentScore", "playerScore", "BallAudio", "SpeedUpAnimationPlayer", "SpeedUpAudio")]
 position = Vector2(577, 325)
 physics_material_override = SubResource("PhysicsMaterial_ltg05")
 gravity_scale = 0.0
+can_sleep = false
 lock_rotation = true
+freeze_mode = 1
 max_contacts_reported = 10
 linear_damp_mode = 1
 script = ExtResource("4_wfdgh")
@@ -289,16 +361,18 @@ DefaultSpeed = 500.0
 opponentScore = NodePath("../CanvasLayer/OpponentScore")
 playerScore = NodePath("../CanvasLayer/PlayerScore")
 BallAudio = NodePath("BallAudio")
+SpeedUpAnimationPlayer = NodePath("../CanvasLayer/SpeedUp/AnimationPlayer")
+SpeedUpAudio = NodePath("../CanvasLayer/SpeedUp/AudioStreamPlayer")
 SpeedIncreaseInterval = 20.0
-SpeedIncrement = 100.0
-SpeedCap = 1400.0
+SpeedIncrement = 125.0
+SpeedCap = 1300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_l4swj")
 
 [node name="BallAudio" type="AudioStreamPlayer" parent="Ball"]
 stream = ExtResource("7_ke7mp")
-volume_db = -80.0
+volume_db = -22.065
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball"]
 position = Vector2(1.96695e-06, -1.84774e-06)
@@ -309,6 +383,13 @@ texture = ExtResource("7_0s0ar")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Ball/HitDetectionArea"]
 shape = SubResource("CircleShape2D_l4swj")
+
+[node name="Trail" type="Line2D" parent="Ball"]
+width = 19.025
+width_curve = SubResource("Curve_r7erd")
+default_color = Color(1, 1, 1, 0.662745)
+script = ExtResource("12_fkmk8")
+length = 40
 
 [node name="Left" type="StaticBody2D" parent="." groups=["Walls"]]
 position = Vector2(-13.5, 325.5)
@@ -324,7 +405,7 @@ shape = SubResource("RectangleShape2D_gji7q")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_8jc4v")
-volume_db = -80.0
+volume_db = -12.411
 autoplay = true
 mix_target = 1
 

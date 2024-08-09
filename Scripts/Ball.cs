@@ -12,6 +12,10 @@ public partial class Ball : RigidBody2D
     RichTextLabel playerScore;
     [Export]
     AudioStreamPlayer BallAudio;
+    [Export]
+    AnimationPlayer SpeedUpAnimationPlayer;
+    [Export]
+    AudioStreamPlayer SpeedUpAudio;
 
     [Export] float SpeedIncreaseInterval;
     [Export] float SpeedIncrement;
@@ -38,6 +42,8 @@ public partial class Ball : RigidBody2D
             GD.Print("Speed Up! DefaultSpeed =" + DefaultSpeed.ToString());
             LinearVelocity = LinearVelocity.Normalized() * DefaultSpeed;
             currentTime=0;
+            SpeedUpAnimationPlayer.Play("SpeedUpAnimation");
+            SpeedUpAudio.Play(0);
         }
     }
  
@@ -46,6 +52,9 @@ public partial class Ball : RigidBody2D
         updateTimer((float)delta);
         if(DefaultSpeed<SpeedCap)
         SpeedUp();
+        
+        // if signal GameOver is caught
+        // CameraLogic.CameraShake()
     }
  
     public void OnBallHit(Area2D area)

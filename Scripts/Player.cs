@@ -22,6 +22,7 @@ public partial class Player : Sprite2D
 		Godot.Vector2 mousePos = GetViewport().GetMousePosition();
 		if (Ceiling.Position.Y+CollisionOffset <= mousePos.Y && mousePos.Y <= Floor.Position.Y-CollisionOffset)
 		{
+			if(Input.MouseMode == Input.MouseModeEnum.ConfinedHidden)
 			Position = new Godot.Vector2(Position.X, mousePos.Y);
 		}
 		else

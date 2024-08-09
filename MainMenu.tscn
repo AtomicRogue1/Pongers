@@ -87,7 +87,7 @@ texture = ExtResource("2_3siaa")
 
 [node name="MainMenuPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMP3_36tp8")
-volume_db = -80.0
+volume_db = -12.411
 autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/PlayButton" to="." method="OnPlayButtonPressed"]
